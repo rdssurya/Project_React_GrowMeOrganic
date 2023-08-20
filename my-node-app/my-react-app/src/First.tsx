@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 
 function First() {
-  // const userForm = document.getElementById('userForm') as HTMLFormElement;
   const navigate=useNavigate();
   const [formData, setFormData] = useState({
     name: '',

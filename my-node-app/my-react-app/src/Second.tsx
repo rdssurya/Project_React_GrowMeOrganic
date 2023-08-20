@@ -1,6 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from 'react';
+import React,{ useEffect, useState } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import Checkbox from '@mui/material/Checkbox';
+
 interface Item {
     id: number;
     name: string;
@@ -32,7 +34,17 @@ function Second(){
             throw new Error('Error fetching data');
         }
     }
+    const [isCollapsed, setIsCollapsed] = useState(true);
 
+    const toggleCollapse = () => {
+      setIsCollapsed(!isCollapsed);
+    };
+
+    const [checked, setChecked] = useState(false);
+  
+    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setChecked(event.target.checked);
+    }
     return (
         <><h1>Component 1</h1>
         <div style={{ height: 400, width: '100%' }}>
@@ -43,7 +55,35 @@ function Second(){
       />
     </div>
     <h1>Component 2</h1>
+    <div>
+      <button onClick={toggleCollapse}>
+        {isCollapsed ? 'Show Content' : 'Hide Content'}
+      </button>
+      {!isCollapsed && (
+        <div>
+          <label>
+        <Checkbox
+          checked={checked}
+          onChange={handleCheckboxChange}
+          color="primary"
+        />
+        Check this box
+      </label>
+        </div>
+      )}
+    </div>
     </>
     );
 }
 export default Second;
+
+
+
+
+
+
+
+
+
+
+

@@ -8,13 +8,6 @@ function App() {
             <Route path='/' element={<First/>} />
             <Route path='/second' element={<Second/>} />
         </Routes>
-        
-        // <Routes>
-        // <Route path="/" component={}>
-        //     <First />
-        // </Route>
-        // </Routes>
-        // <><First/></>
     );
   }
   
