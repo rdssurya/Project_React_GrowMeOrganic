@@ -3,9 +3,12 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background: linear-gradient(
+          to right,
+          rgb(75, 121, 161),
+          rgb(40, 62, 81)
+        );
+        color: white;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -26,7 +29,8 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  justify-content: center;
+  align-items:flex-start;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -43,7 +47,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #05424d;
   cursor: pointer;
   transition: border-color 0.25s;
 }

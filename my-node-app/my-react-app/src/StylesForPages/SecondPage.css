@@ -1,0 +1,16 @@
+.componentDiv{
+    display: flex;
+    justify-content: space-between;
+}
+#componentOne{
+    margin-right: 3rem;
+}
+#componentTwo{
+   margin-left: 3rem;
+}
+@media screen and (max-width: 960px) {
+    .componentDiv {
+        justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
