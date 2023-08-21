@@ -1,21 +1,22 @@
-import React,{ useState } from 'react';
-import Checkbox from '@mui/material/Checkbox';
+// import React,{ useState } from 'react';
+// import Checkbox from '@mui/material/Checkbox';
 import ComponentOne from "./Components/componentOne";
+import ComponentTwo from "./Components/componentTwo";
 import "../StylesForPages/SecondPage.css";
-import CollapsibleCheckboxList from './Components/componentTwo';
+
+
 
 function SecondPage(){
-    // const [isCollapsed, setIsCollapsed] = useState(true);
-
-    // const toggleCollapse = () => {
-    //   setIsCollapsed(!isCollapsed);
-    // };
-
-    // const [checked, setChecked] = useState(false);
-  
-    // const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //   setChecked(event.target.checked);
-    // }
+  const dept = [
+    {
+      department: "customer_service",
+      sub_departments: ["support", "customer_success"]
+    },
+    {
+      department: "design",
+      sub_departments: ["graphic_design", "product_design", "web_design"]
+    }
+  ];
     return (
         <>
         <div className="componentDiv">
@@ -24,22 +25,13 @@ function SecondPage(){
           </div>
           <div id="componentTwo">
         <h1>Component 2</h1>
-          {/* <button onClick={toggleCollapse}>
-            {isCollapsed ? 'Show Content' : 'Hide Content'}
-          </button>
-          {!isCollapsed && (
-            <div>
-              <label>
-                <Checkbox
-                  checked={checked}
-                  onChange={handleCheckboxChange}
-                  color="primary"
-                />
-                Check this box
-              </label>
-            </div>
-          )} */}
-          <CollapsibleCheckboxList/>
+        {dept.map((dep, index) => (
+        <ComponentTwo
+          ind={index.toString()}
+          name={dep.department}
+          subDept={dep.sub_departments}
+        />
+      ))}
           </div>  
         </div>
     </>

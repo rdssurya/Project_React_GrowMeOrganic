@@ -1,182 +1,90 @@
-// import Checkbox from '@mui/material/Checkbox';
-// import FormControlLabel from '@mui/material/FormControlLabel';
+import React, { useState } from "react";
 
-// const arr=[{"department": "customer_service","sub_departments": ["support","customer_success"]},{"department": "design","sub_departments": ["graphic_design","product_design","web_design"]}];
-
-// import React, { useState } from 'react';
-// import Checkbox from '@mui/material/Checkbox';
-// function ComponentTwo(){
-//     function CollapsibleButton() {
-//         const [isCollapsed, setIsCollapsed] = useState(true);
-      
-//         const toggleCollapse = () => {
-//           setIsCollapsed(!isCollapsed);
-//         };
-      
-//         return (
-//           <div>
-//               {isCollapsed ? (<button onClick={toggleCollapse}>+</button>) : (<button onClick={toggleCollapse}>-</button>)}
-//             {!isCollapsed && (
-//               <div>
-//                 <p></p>
-//               </div>
-//             )}
-//           </div>
-//         );
-//       }
-    
-//     function CreatingCheckBox(item){
-//         const [checked, setChecked] = useState(false);
-
-//         const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//             setChecked(event.target.checked);
-//         };
-        
-//         return (
-//             <label>
-//             <Checkbox
-//                 checked={checked}
-//                 onChange={handleCheckboxChange}
-//                 color="primary"
-//             />
-//             {item}
-//             </label>
-//         );
-//     }
-// }
-
-import React, { useState } from 'react';
-import {
-  Checkbox,
-  FormControlLabel,
-  Button,
-  ButtonGroup,
-} from '@mui/material';
-
-interface Department {
-  department: string;
-  sub_departments: string[];
+interface ComponentTwoProps {
+  name: string;
+  ind: string;
+  subDept: string[];
 }
 
-const departmentsData: Department[] = [
-  {
-    department: 'customer_service',
-    sub_departments: ['support', 'customer_success'],
-  },
-  {
-    department: 'design',
-    sub_departments: ['graphic_design', 'product_design', 'web_design'],
-  },
-];
+export default function ComponentTwo(props: ComponentTwoProps) {
+  const [checked, setChecked] = useState(false);
+  const [childCheckboxes, setChildCheckboxes] = useState<boolean[]>(
+    new Array(props.subDept.length).fill(false)
+  );
+  const [showChildren, setShowChildren] = useState(true);
 
-function CollapsibleCheckboxList() {
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const handleClick = () => {
+    setShowChildren(!showChildren);
+  };
 
-  const toggleCollapse = (department: Department) => {
-    setSelectedItems((prevSelectedItems) =>
-      prevSelectedItems.includes(department.department)
-        ? prevSelectedItems.filter((item) => item !== department.department)
-        : [...prevSelectedItems, department.department]
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.checked;
+    setChecked(newValue);
+    setChildCheckboxes(childCheckboxes.map(() => newValue));
+  };
+
+  const handleInputChangeChild = (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.checked;
+    const updatedChildCheckboxes = [...childCheckboxes];
+    updatedChildCheckboxes[index] = newValue;
+    setChildCheckboxes(updatedChildCheckboxes);
+    
+    setChecked(updatedChildCheckboxes.every((isChecked) => isChecked));
+  };
+
+  interface ChildrenProps {
+    forClass: string;
+    forId: number;
+    name: string;
+  }
+
+  function Children(props: ChildrenProps) {
+    return (
+      <div>
+        <input
+          type="checkbox"
+          className={props.forClass}
+          id={props.forClass + "" + (props.forId + 1)}
+          onChange={handleInputChangeChild(props.forId)}
+          checked={childCheckboxes[props.forId]}
+        />
+        {props.name}
+      </div>
     );
-  };
-
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    if (selectedItems.includes(value)) {
-      // Uncheck the sub-department
-      setSelectedItems((prevSelectedItems) =>
-        prevSelectedItems.filter((item) => item !== value)
-      );
-      // Check if all sub-departments are still selected
-      const parentDepartment = departmentsData.find(
-        (departmentData) =>
-          departmentData.sub_departments.includes(value) &&
-          !selectedItems.includes(departmentData.department)
-      );
-      if (parentDepartment) {
-        // Uncheck the parent department
-        setSelectedItems((prevSelectedItems) =>
-          prevSelectedItems.filter(
-            (item) => item !== parentDepartment.department
-          )
-        );
-      }
-    } else {
-      setSelectedItems((prevSelectedItems) => [
-        ...prevSelectedItems,
-        value,
-      ]);
-      const parentDepartment = departmentsData.find(
-        (departmentData) =>
-          departmentData.sub_departments.includes(value) &&
-          !selectedItems.includes(departmentData.department)
-      );
-      if (parentDepartment) {
-        // Check the parent department if all its sub-departments are selected
-        const allSubDepartmentsSelected = parentDepartment.sub_departments.every(
-          (subDept) => selectedItems.includes(subDept)
-        );
-        if (allSubDepartmentsSelected) {
-          setSelectedItems((prevSelectedItems) => [
-            ...prevSelectedItems,
-            parentDepartment.department,
-          ]);
-        }
-      }
-    }
-  };
+  }
 
   return (
-    <div>
-      {departmentsData.map((departmentData) => (
-        <div key={departmentData.department}>
-          <ButtonGroup>
-            <Button onClick={() => toggleCollapse(departmentData)}>
-              {selectedItems.includes(departmentData.department)
-                ? 'Collapse'
-                : 'Expand'}
-            </Button>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={selectedItems.includes(departmentData.department)}
-                  onChange={() => handleCheckboxChange({
-                    target: {
-                      value: departmentData.department,
-                    }
-                  } as React.ChangeEvent<HTMLInputElement>)}
-                  value={departmentData.department}
-                />
-              }
-              label={departmentData.department}
-            />
-          </ButtonGroup>
-          {selectedItems.includes(departmentData.department) && (
-            <div>
-              {departmentData.sub_departments.map((subDepartment) => (
-                <FormControlLabel
-                  key={subDepartment}
-                  control={
-                    <Checkbox
-                      checked={selectedItems.includes(subDepartment)}
-                      onChange={() => handleCheckboxChange({
-                        target: {
-                          value: subDepartment,
-                        }
-                      } as React.ChangeEvent<HTMLInputElement>)}
-                      value={subDepartment}
-                    />
-                  }
-                  label={subDepartment}
-                />
-              ))}
-            </div>
-          )}
+    <>
+      <div>
+        <button onClick={handleClick} className={props.ind}>
+          {showChildren ? "-" : "+"}
+        </button>
+        <input
+          id={props.ind}
+          type="checkbox"
+          onChange={handleInputChange}
+          checked={checked}
+        />
+        {props.name}
+      </div>
+      {showChildren && (
+        <div
+          id={"children" + props.ind}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            marginLeft: "40px",
+          }}
+        >
+          {props.subDept.map((ele, index) => (
+            <Children key={ele} name={ele} forClass={props.ind} forId={index} />
+          ))}
         </div>
-      ))}
-    </div>
+      )}
+      <br />
+    </>
   );
 }
 
-export default CollapsibleCheckboxList;
+
 
