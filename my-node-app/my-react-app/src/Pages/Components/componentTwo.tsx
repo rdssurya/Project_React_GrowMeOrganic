@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {Button,Checkbox} from "@mui/material";
 
 interface ComponentTwoProps {
   name: string;
@@ -11,7 +12,7 @@ export default function ComponentTwo(props: ComponentTwoProps) {
   const [childCheckboxes, setChildCheckboxes] = useState<boolean[]>(
     new Array(props.subDept.length).fill(false)
   );
-  const [showChildren, setShowChildren] = useState(true);
+  const [showChildren, setShowChildren] = useState(false);
 
   const handleClick = () => {
     setShowChildren(!showChildren);
@@ -41,13 +42,19 @@ export default function ComponentTwo(props: ComponentTwoProps) {
   function Children(props: ChildrenProps) {
     return (
       <div>
-        <input
+        {/* <input
           type="checkbox"
           className={props.forClass}
           id={props.forClass + "" + (props.forId + 1)}
           onChange={handleInputChangeChild(props.forId)}
           checked={childCheckboxes[props.forId]}
-        />
+        /> */}
+        <Checkbox
+        className={props.forClass}
+        id={props.forClass + "" + (props.forId + 1)}
+        onChange={handleInputChangeChild(props.forId)}
+        checked={childCheckboxes[props.forId]}
+        defaultChecked />
         {props.name}
       </div>
     );
@@ -56,15 +63,20 @@ export default function ComponentTwo(props: ComponentTwoProps) {
   return (
     <>
       <div>
-        <button onClick={handleClick} className={props.ind}>
+        <Button variant="contained" size="small" onClick={handleClick} className={props.ind}>
           {showChildren ? "-" : "+"}
-        </button>
-        <input
+        </Button><span>      </span>
+        {/* <input
           id={props.ind}
           type="checkbox"
           onChange={handleInputChange}
           checked={checked}
-        />
+        /> */}
+        <Checkbox
+        id={props.ind}
+        onChange={handleInputChange}
+        checked={checked}
+        defaultChecked />
         {props.name}
       </div>
       {showChildren && (
@@ -73,7 +85,7 @@ export default function ComponentTwo(props: ComponentTwoProps) {
           style={{
             display: "flex",
             flexDirection: "column",
-            marginLeft: "40px",
+            marginLeft: "80px",
           }}
         >
           {props.subDept.map((ele, index) => (
