@@ -1,5 +1,4 @@
-// import React,{ useState } from 'react';
-// import Checkbox from '@mui/material/Checkbox';
+// import { useNavigate } from "react-router-dom";
 import ComponentOne from "./Components/componentOne";
 import ComponentTwo from "./Components/componentTwo";
 import "../StylesForPages/SecondPage.css";

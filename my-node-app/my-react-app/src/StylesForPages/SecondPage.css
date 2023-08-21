@@ -3,6 +3,7 @@
     justify-content: space-between;
 }
 #componentOne{
+  margin-left: 0rem;
     margin-right: 3rem;
 }
 #componentTwo{
@@ -11,6 +12,12 @@
 @media screen and (max-width: 960px) {
     .componentDiv {
         justify-content: center;
-      flex-wrap: wrap;
+        flex-wrap: wrap;
     }
+    #componentOne{
+      margin-left: 20rem;
+  }
+  #componentTwo{
+     margin-left: 2rem;
+  }
   }

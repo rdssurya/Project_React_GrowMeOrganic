@@ -3,7 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  background: linear-gradient(to left bottom, #f7ff6c, #6acf85, #00938c, #1f5565, #1f2022);
+  background: rgb(111, 194, 90);
         color: white;
 
   font-synthesis: none;
@@ -66,4 +66,7 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+@media screen and (max-width: 960px) {
+  
 }
