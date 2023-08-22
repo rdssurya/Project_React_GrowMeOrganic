@@ -2,7 +2,7 @@
 The objective of this React Internship Assignment is to create a new React application that implements the following functionality:
 
 # Task 1: Application Configuration
-Created a new project file with "my-node-app" as a directory.
+Created a new project folder Project_React_GrowMeOrganic with "my-node-app" as a directory.
 
 In this directory you can find "my-react-app" which contains all the related files for the assignment.
 # Task 2: First Page of the Application
